@@ -1,0 +1,36 @@
+name: Build and Push
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+
+env:
+  QUAY_REPO: "quay.io/dtrifiro/llama-cpp-python-serving"
+  CI: true
+  DOCKER_BUILDKIT: 1
+  FORCE_COLOR: 1
+
+jobs:
+  build-and-push:
+    name: Build and Push Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Setup Docker Buildx"
+        uses: docker/setup-buildx-action@v2
+      - name: "Build"
+        run: |
+          date="$(date +%Y%m%d%H%M)"
+          rev="$(git rev-parse --short HEAD)"
+
+          docker build -t "${QUAY_REPO}:latest" -t "${QUAY_REPO}:${rev}" -t "${QUAY_REPO}:${date}" .
+      - name: "Push to quay"
+        run: |
+          docker login -u="${{secrets.QUAY_USERNAME}}" -p="${{secrets.QUAY_TOKEN}}" quay.io
+
+          docker push --all-tags "${QUAY_REPO}"

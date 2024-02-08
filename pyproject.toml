@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "llama-cpp-servingruntime"
+version = "0.1.0"
+description = "Kserve servingruntime using llama-cpp-python"
+authors = ["Daniele Trifirò <dtrifiro@redhat.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+llama-cpp-python = {extras = ["server"], version = "^0.2.39"}
+uvicorn = "^0.27.0.post1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

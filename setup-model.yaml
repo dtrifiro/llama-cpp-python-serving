@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: llama-cpp-python-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 6Gi
+---
+apiVersion: v1
+# TODO: could use a Job instead of a Pod
+kind: Pod
+metadata:
+  name: setup-mistral-7b-q2k-extra-small
+spec:
+  volumes:
+    - name: model-volume
+      persistentVolumeClaim:
+        claimName: llama-cpp-python-claim
+  restartPolicy: Never
+  initContainers:
+    - name: fix-volume-permissions
+      image: busybox
+      command: ["sh"]
+      args: ["-c", "chown -R 1001:1001 /mnt/models"]
+      volumeMounts:
+        - mountPath: "/mnt/models/"
+          name: model-volume
+  containers:
+    - name: download-model
+      image: busybox
+      command:
+        [
+          "wget",
+          "-P",
+          "/mnt/models/",
+          "https://huggingface.co/ikawrakow/mistral-7b-quantized-gguf/resolve/main/mistral-7b-q2k-extra-small.gguf",
+        ]
+      volumeMounts:
+        - mountPath: "/mnt/models/"
+          name: model-volume
+      resources:
+        limits:
+          memory: "2Gi"
+          cpu: "2"
