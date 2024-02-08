@@ -38,6 +38,7 @@ jobs:
           docker build -t "${QUAY_REPO}:latest-cuda" -t "${QUAY_REPO}:${rev}-cuda" -t "${QUAY_REPO}:${date}-cuda" -f Dockerfile.cuda .
 
       - name: "Push to quay"
+        if: github.ref == 'refs/heads/main'
         run: |
           docker login -u="${{secrets.QUAY_USERNAME}}" -p="${{secrets.QUAY_TOKEN}}" quay.io
 
