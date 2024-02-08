@@ -8,16 +8,12 @@ RUN microdnf -y update && \
 
 ENV POETRY_VIRTUALENVS_IN_PROJECT=1
 
-## llama-cpp-python installation
-## vulkan
-# env CMAKE_ARGS="-DLLAMA_VULKAN=on"
-# openblas
-env CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS"
-
 
 WORKDIR /llama-cpp-python
 COPY pyproject.toml .
 COPY poetry.lock .
+
+ENV CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS"
 RUN pip3.11 install poetry && \
     scl enable gcc-toolset-12 -- poetry install
 

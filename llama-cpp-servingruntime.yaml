@@ -9,7 +9,8 @@ spec:
       name: gguf
   containers:
     - name: kserve-container
-      image: quay.io/dtrifiro/llama-cpp-python-serving:latest
+      # image: quay.io/dtrifiro/llama-cpp-python-serving:latest # cpu only
+      image: quay.io/dtrifiro/llama-cpp-python-serving:latest-cuda # GPU-accelerated
       ommands: ["python3", "-m", "llama_cpp.server"]
       env:
         - name: MODEL
@@ -28,6 +29,7 @@ spec:
       resources: # configure as required, depending on the model
         requests:
           # cpu: 8
+          # "nvidia.com/gpu": 1 # uncomment if using GPU, use the latest-cuda tag
           memory: 8Gi # llama2 7b models
           # memory: 16Gi # llama2 13b models
           # memory: 64Gi # llama2 70b models
