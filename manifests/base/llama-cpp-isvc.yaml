@@ -11,5 +11,5 @@ spec:
     model:
       modelFormat:
         name: gguf
-      runtime: llama-cpp-python-runtime
-      storageUri: pvc://llama-cpp-python-claim/
+      runtime: llama-cpp-python
+      storageUri: pvc://llama-cpp-python-claim/ # edit as required

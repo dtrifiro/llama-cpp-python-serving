@@ -1,0 +1,20 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  name: llama-cpp-python
+spec:
+  multiModel: false
+  supportedModelFormats:
+    - autoSelect: true
+      name: gguf
+  containers:
+    - name: kserve-container
+      image: quay.io/dtrifiro/llama-cpp-python-serving:latest
+      ports:
+        - containerPort: 8000
+          protocol: TCP
+      env:
+        - name: MODEL
+          value: /mnt/models/mistral-7b-q2k-extra-small.gguf
+        # - name: CONFIG_FILE
+        #   value: <>
