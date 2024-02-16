@@ -31,7 +31,7 @@ export ISVC_URL=$(kubectl get isvc llama-cpp-python -o jsonpath='{.status.compon
 curl -k ${ISVC_URL}/v1/models
 
 # perform inference
-curl -k ${ISVC_URL}/v1/completions text="The quick brown fox"
+bash scripts/inference_simple.sh "The quick brown fox "
 ```
 
 Note that since the llama-cpp-python application uses [fastapi](https://github.com/tiangolo/fastapi) and [swagger](https://swagger.io/), the server exposes a `/docs` endpoint with exposed endpoints as well
