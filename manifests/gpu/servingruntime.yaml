@@ -1,27 +1,26 @@
-apiVersion: serving.kserve.io/v1alpha1
-kind: ServingRuntime
-metadata:
-  name: llama-cpp-python
-  annotations:
+- op: replace
+  path: /spec/containers/0/image
+  value: quay.io/dtrifiro/llama-cpp-python-serving:latest-cuda
+- op: add
+  path: /metadata/annotations
+  value:
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
-spec:
-  tolerations:
+- op: add
+  path: /spec/containers/0/resources
+  value:
+    requests:
+      nvidia.com/gpu: "1"
+      # memory: 8Gi # llama2 7b models
+      # memory: 16Gi # llama2 13b models
+      # memory: 64Gi # llama2 70b models
+    limits:
+      nvidia.com/gpu: "1"
+      # memory: 8Gi # llama2 7b models
+      # memory: 16Gi # llama2 13b models
+      # memory: 64Gi # llama2 70b models
+- op: add
+  path: /spec/tolerations
+  value:
     - key: nvidia.com/gpu
       operator: Exists
       effect: NoSchedule
-  containers:
-    - name: kserve-container
-      image: quay.io/dtrifiro/llama-cpp-python-serving:latest-cuda
-      resources: # configure as required, depending on the model
-        requests:
-          nvidia.com/gpu: "1"
-          # cpu: 4
-          # memory: 8Gi # llama2 7b models
-          # memory: 16Gi # llama2 13b models
-          # memory: 64Gi # llama2 70b models
-        limits:
-          nvidia.com/gpu: "1"
-          # cpu: 8
-          # memory: 64Gi # llama2 7b models
-          # memory: 16Gi # llama2 13b models
-          # memory: 64Gi # llama2 70b models

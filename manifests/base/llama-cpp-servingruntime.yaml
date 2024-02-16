@@ -9,7 +9,7 @@ spec:
       name: gguf
   containers:
     - name: kserve-container
-      image: quay.io/dtrifiro/llama-cpp-python-serving:latest
+      image: quay.io/dtrifiro/llama-cpp-python-serving
       ports:
         - containerPort: 8000
           protocol: TCP
