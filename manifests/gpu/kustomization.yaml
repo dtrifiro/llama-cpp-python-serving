@@ -6,3 +6,5 @@ resources:
   - ../base/
 patches:
   - path: servingruntime.yaml
+    target:
+      kind: ServingRuntime

@@ -1,19 +1,16 @@
-apiVersion: serving.kserve.io/v1alpha1
-kind: ServingRuntime
-metadata:
-  name: llama-cpp-python
-spec:
-  containers:
-    - name: kserve-container
-      image: quay.io/dtrifiro/llama-cpp-python-serving:latest
-      resources: # configure as required, depending on the model
-        requests:
-          cpu: 4
-          # memory: 8Gi # llama2 7b models
-          # memory: 16Gi # llama2 13b models
-          # memory: 64Gi # llama2 70b models
-        limits:
-          cpu: 8
-          # memory: 64Gi # llama2 7b models
-          # memory: 16Gi # llama2 13b models
-          # memory: 64Gi # llama2 70b models
+- op: replace
+  path: /spec/containers/0/image
+  value: quay.io/dtrifiro/llama-cpp-python-serving:latest
+- op: add
+  path: /spec/containers/0/resources
+  value:
+    requests:
+      cpu: 4
+      # memory: 8Gi # llama2 7b models
+      # memory: 16Gi # llama2 13b models
+      # memory: 64Gi # llama2 70b models
+    limits:
+      cpu: 8
+      # memory: 64Gi # llama2 7b models
+      # memory: 16Gi # llama2 13b models
+      # memory: 64Gi # llama2 70b models
