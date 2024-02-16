@@ -42,7 +42,3 @@ spec:
       volumeMounts:
         - mountPath: "/mnt/models/"
           name: model-volume
-      resources:
-        limits:
-          memory: "2Gi"
-          cpu: "2"
