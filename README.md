@@ -21,8 +21,12 @@ This example uses `mistral-7b-q2k-extra-small.gguf` from [ikawrakow/mistral-7b-q
 kubectl apply -f setup-model.yaml
 # Wait for the model to be downloaded:
 kubectl wait --for=jsonpath='{.status.phase}'=Succeeded pod/setup-mistral-7b-q2k-extra-small  --timeout 300s
-# Create the ServingRuntime/InferenceService
-kubectl apply -f llama-cpp-isvc.yaml -f llama-cpp-servingruntime.yaml
+
+# Create the ServingRuntime/InferenceService (GPU INFERENCE)
+kubectl kustomize manifests/gpu | kubectl apply -
+
+## or, to create the ServingRuntime/InferenceService (CPU INFERENCE)
+# kubectl kustomize manifests/cpu | kubectl apply -
 
 # wait for the InferenceService to come up
 oc wait --for=condition=Ready isvc/llama-cpp-python --timeout 300s
