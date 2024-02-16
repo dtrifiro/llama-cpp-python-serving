@@ -1,13 +1,13 @@
 FROM registry.access.redhat.com/ubi9/ubi:latest as cuda-base
-ARG CUDA_VERSION=12-3
+ARG CUDA_PKG_VERSION=12-3
 
-ENV CUDA_VERSION=${CUDA_VERSION}
+ENV CUDA_PKG_VERSION=${CUDA_PKG_VERSION}
 
 RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo && \
     dnf install -y  \
-        cuda-cudart-${CUDA_VERSION} \
-        cuda-compat-${CUDA_VERSION} \
-        libcublas-${CUDA_VERSION} \
+        cuda-cudart-${CUDA_PKG_VERSION} \
+        cuda-compat-${CUDA_PKG_VERSION} \
+        libcublas-${CUDA_PKG_VERSION} \
     && \
     echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
     echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf && \
@@ -18,16 +18,16 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib/:/usr/local/cuda/co
 
 
 FROM cuda-base as builder
-ARG CUDA_VERSION
-ENV CUDA_VERSION=${CUDA_VERSION}
+ARG CUDA_PKG_VERSION
+ENV CUDA_PKG_VERSION=${CUDA_PKG_VERSION}
 
 RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo && \
     dnf -y install \
         git gcc-toolset-12-gcc-c++ gcc-toolset-12 cmake python3.11-pip \
-        cuda-nvcc-${CUDA_VERSION} \
-        libcublas-devel-${CUDA_VERSION} \
-        cuda-cudart-devel-${CUDA_VERSION} \
-        cuda-driver-devel-${CUDA_VERSION} \
+        cuda-nvcc-${CUDA_PKG_VERSION} \
+        libcublas-devel-${CUDA_PKG_VERSION} \
+        cuda-cudart-devel-${CUDA_PKG_VERSION} \
+        cuda-driver-devel-${CUDA_PKG_VERSION} \
     && \
     dnf clean all && \
     pip3.11 install --no-cache-dir --upgrade pip wheel
