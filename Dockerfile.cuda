@@ -14,8 +14,7 @@ RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/
     dnf clean all
 
 ENV CUDA_HOME="/usr/local/cuda"
-ENV PATH="/usr/local/nvidia/bin:${CUDA_HOME}/bin:${PATH}"
-ENV LD_LIBRARY_PATH="/usr/local/nvidia/lib:/usr/local/nvidia/lib64:$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:${LD_LIBRARY_PATH}"
+ENV LD_LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib/:/usr/local/cuda/compat:${LD_LIBRARY_PATH}
 
 
 FROM cuda-base as builder
@@ -33,6 +32,7 @@ RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/
     dnf clean all && \
     pip3.11 install --no-cache-dir --upgrade pip wheel
 
+ENV PATH="${CUDA_HOME}/bin:${PATH}"
 ENV POETRY_VIRTUALENVS_IN_PROJECT=1
 
 WORKDIR /llama-cpp-python
