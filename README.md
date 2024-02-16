@@ -17,19 +17,15 @@ See llama.cpp's [docs](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file
 This example uses `mistral-7b-q2k-extra-small.gguf` from [ikawrakow/mistral-7b-quantized-gguf](https://huggingface.co/ikawrakow/mistral-7b-quantized-gguf]).
 
 ```bash
-# Create a PVC and schedule a pod to download the model
-kubectl apply -f setup-model.yaml
-# Wait for the model to be downloaded:
-kubectl wait --for=jsonpath='{.status.phase}'=Succeeded pod/setup-mistral-7b-q2k-extra-small  --timeout 300s
+bash scripts/setup_model.sh
 
 # Create the ServingRuntime/InferenceService (GPU INFERENCE)
-kubectl kustomize manifests/gpu | kubectl apply -
+bash scripts/deploy.sh gpu
 
 ## or, to create the ServingRuntime/InferenceService (CPU INFERENCE)
-# kubectl kustomize manifests/cpu | kubectl apply -
+# bash scripts/deploy.sh cpu
 
-# wait for the InferenceService to come up
-oc wait --for=condition=Ready isvc/llama-cpp-python --timeout 300s
+export ISVC_URL=$(kubectl get isvc llama-cpp-python -o jsonpath='{.status.components.predictor.url}')
 
 # Check that the model is available:
 curl -k ${ISVC_URL}/v1/models
