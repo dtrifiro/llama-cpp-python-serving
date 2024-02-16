@@ -40,8 +40,32 @@ jobs:
           docker build -t "${QUAY_REPO}:latest-cuda" -t "${QUAY_REPO}:${rev}-cuda" -t "${QUAY_REPO}:${date}-cuda" -f Dockerfile.cuda .
 
       - name: "Push to quay"
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
           docker login -u="${{secrets.QUAY_USERNAME}}" -p="${{secrets.QUAY_TOKEN}}" quay.io
 
           docker push --all-tags "${QUAY_REPO}"
+
+  smoke-test:
+    name: "Smoke test"
+    needs: build-and-push
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtrifiro/setup-kserve@v0.0.1
+      - name: Setup Model
+        run: |
+          bash scripts/setup_model.sh
+      - name: Deploy InferenceService/ServingRuntime
+        run: |
+          bash scripts/deploy.sh cpu
+      - name: Perform sample inference
+        run: |
+          ISVC_HOST=$(kubectl get isvc llama-cpp-python -o jsonpath='{.status.components.predictor.url}' | cut -d / -f 3-)
+
+          # Add the ISVC_HOST to /etc/hosts since we can't resolve it
+          echo "127.0.0.1 ${ISVC_HOST}" | sudo tee -a /etc/hosts
+
+          bash scripts/inference_simple.sh
