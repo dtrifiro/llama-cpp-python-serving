@@ -1,16 +1,16 @@
 - op: replace
   path: /spec/containers/0/image
   value: quay.io/dtrifiro/llama-cpp-python-serving:latest
-- op: add
-  path: /spec/containers/0/resources
-  value:
-    requests:
-      cpu: 4
-      # memory: 8Gi # llama2 7b models
-      # memory: 16Gi # llama2 13b models
-      # memory: 64Gi # llama2 70b models
-    limits:
-      cpu: 8
-      # memory: 64Gi # llama2 7b models
-      # memory: 16Gi # llama2 13b models
-      # memory: 64Gi # llama2 70b models
+# - op: add # edit as required
+#   path: /spec/containers/0/resources
+#   value:
+#     requests:
+#       cpu: 4
+#       # memory: 8Gi # llama2 7b models
+#       # memory: 16Gi # llama2 13b models
+#       # memory: 64Gi # llama2 70b models
+#     limits:
+#       cpu: 8
+#       # memory: 64Gi # llama2 7b models
+#       # memory: 16Gi # llama2 13b models
+#       # memory: 64Gi # llama2 70b models
