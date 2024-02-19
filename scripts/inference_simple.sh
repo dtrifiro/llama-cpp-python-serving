@@ -11,5 +11,8 @@ ISVC_URL=$(kubectl get isvc llama-cpp-python -o jsonpath='{.status.components.pr
 
 curl -k \
 	-H 'Content-type: application/json' \
-	-d '{"text": "'"${text}"'"}' \
-	"${ISVC_URL}/v1/completions"
+	-d '{
+        "prompt": "'"${text}"'",
+        "stop": "\n"
+    }' \
+	"${ISVC_URL}/v1/completions" | jq
