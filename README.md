@@ -68,3 +68,15 @@ cat *pem >> .venv/lib/*/site-packages/certifi/cacert.pem
 
 python examples/inference.py
 ```
+
+### Using a console chat:
+
+```bash
+export ISVC_URL=$(oc get isvc llama-cpp-python -o jsonpath='{.status.components.predictor.url}')
+
+python -m venv .venv
+source .venv/bin/activate
+pip install requests
+
+python scripts/inference_chat.py
+```
