@@ -21,14 +21,6 @@ spec:
       persistentVolumeClaim:
         claimName: llama-cpp-python-claim
   restartPolicy: Never
-  initContainers:
-    - name: fix-volume-permissions
-      image: busybox
-      command: ["sh"]
-      args: ["-c", "chown -R 1001:1001 /mnt/models"]
-      volumeMounts:
-        - mountPath: "/mnt/models/"
-          name: model-volume
   containers:
     - name: download-model
       image: busybox
