@@ -24,3 +24,8 @@
     - key: nvidia.com/gpu
       operator: Exists
       effect: NoSchedule
+- op: add
+  path: /spec/containers/0/env/-
+  value:
+    name: N_GPU_LAYERS
+    value: "-1" # Number of layers to offload to the GPU. -1 = all layers

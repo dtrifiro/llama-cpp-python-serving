@@ -71,7 +71,7 @@ cat *pem >> .venv/lib/*/site-packages/certifi/cacert.pem
 python examples/inference.py
 ```
 
-### Using a console chat:
+### Using a console chat
 
 ```bash
 export ISVC_URL=$(oc get isvc llama-cpp-python -o jsonpath='{.status.components.predictor.url}')
@@ -82,3 +82,7 @@ pip install requests
 
 python scripts/inference_chat.py
 ```
+
+### Troubleshooting
+
+- The InferenceService fails to come up with error: `llama_load_model_from_file: failed to load model`. Workaround: The GPU memory might be insufficient to hold the model in memory. `N_GPU_LAYERS` can be set to the number of layers to offload to the GPU, leaving the remaining layers to be handled by the CPU.
