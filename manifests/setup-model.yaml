@@ -8,13 +8,13 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 6Gi
+      storage: 100Gi
 ---
 apiVersion: v1
 # TODO: could use a Job instead of a Pod
 kind: Pod
 metadata:
-  name: setup-mistral-7b-q2k-extra-small
+  name: setup-model
 spec:
   volumes:
     - name: model-volume
@@ -24,11 +24,13 @@ spec:
   containers:
     - name: download-model
       image: busybox
-      command:
-        [
+      command: [
           "wget",
           "-P",
           "/mnt/models/",
+          "--continue", # can help if the download fails and the pod needs to be restarted
+          "--output-document",
+          "model.gguf",
           "https://huggingface.co/ikawrakow/mistral-7b-quantized-gguf/resolve/main/mistral-7b-q2k-extra-small.gguf",
         ]
       volumeMounts:

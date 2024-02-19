@@ -15,6 +15,6 @@ spec:
           protocol: TCP
       env:
         - name: MODEL
-          value: /mnt/models/mistral-7b-q2k-extra-small.gguf
+          value: /mnt/models/model.gguf
         # - name: CONFIG_FILE
         #   value: <>

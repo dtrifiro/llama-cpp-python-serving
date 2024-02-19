@@ -3,12 +3,12 @@
 
 set -eux -o pipefail
 
-pod="pod/setup-mistral-7b-q2k-extra-small"
+pod="pod/setup-model"
 # Create a PVC and schedule a pod to download the model
 kubectl apply -f manifests/setup-model.yaml
 
 # Wait for the model to be downloaded:
-max_retries=10
+max_retries=20
 until kubectl wait --for=jsonpath='{.status.phase}'=Succeeded $pod --timeout 60s; do
 	echo "- Waiting for model to be set up"
 	kubectl describe $pod
