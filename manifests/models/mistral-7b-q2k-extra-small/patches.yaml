@@ -1,0 +1,3 @@
+- op: replace
+  path: /spec/containers/0/command/-1
+  value: https://huggingface.co/ikawrakow/mistral-7b-quantized-gguf/resolve/main/mistral-7b-q2k-extra-small.gguf

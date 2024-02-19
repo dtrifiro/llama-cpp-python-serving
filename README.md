@@ -16,6 +16,8 @@ See llama.cpp's [docs](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file
 
 This example uses `mistral-7b-q2k-extra-small.gguf` from [ikawrakow/mistral-7b-quantized-gguf](https://huggingface.co/ikawrakow/mistral-7b-quantized-gguf]).
 
+Other models can be deployed by providing a patch to specify an URL to a `gguf` model, check [manifests/models/](/manifests/models/) for examples.
+
 ```bash
 bash scripts/setup_model.sh
 

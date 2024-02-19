@@ -5,7 +5,9 @@ set -eux -o pipefail
 
 pod="pod/setup-model"
 # Create a PVC and schedule a pod to download the model
-kubectl apply -f manifests/setup-model.yaml
+
+kubectl kustomize manifests/models/mistral-7b-q2k-extra-small | kubectl apply -f -
+# kubectl kustomize manifests/models/mixtral-8x7b-instruct/patches.yaml | kubectl apply -f -
 
 # Wait for the model to be downloaded:
 max_retries=20
