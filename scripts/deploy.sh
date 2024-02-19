@@ -25,7 +25,6 @@ max_retries=10
 until kubectl wait --for=condition=Ready $ISVC_NAME --timeout 60s; do
 	echo "- Waiting for InferenceService to be up"
 	kubectl describe $ISVC_NAME
-	kubectl logs $ISVC_NAME
 	max_retries=$((max_retries - 1))
 	if [[ ${max_retries} -le 0 ]]; then
 		echo "- Timeout waiting for InferenceService"
