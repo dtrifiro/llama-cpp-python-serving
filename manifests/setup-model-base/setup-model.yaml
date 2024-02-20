@@ -26,11 +26,9 @@ spec:
       image: busybox
       command: [
           "wget",
-          "-P",
-          "/mnt/models/",
           "--continue", # can help if the download fails and the pod needs to be restarted
           "--output-document",
-          "model.gguf",
+          "/mnt/models/model.gguf",
           "<dummy>", # replace this or use kustomize
         ]
       volumeMounts:
