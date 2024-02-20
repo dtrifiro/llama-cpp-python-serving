@@ -31,10 +31,7 @@ spec:
           "--continue", # can help if the download fails and the pod needs to be restarted
           "--output-document",
           "model.gguf",
-          # "https://huggingface.co/ikawrakow/mistral-7b-quantized-gguf/resolve/main/mistral-7b-q2k-extra-small.gguf",
-          # "https://huggingface.co/TheBloke/Mixtral-8x7B-v0.1-GGUF/resolve/main/mixtral-8x7b-v0.1.Q8_0.gguf", # 49GB
-          # "https://huggingface.co/TheBloke/Mixtral-8x7B-v0.1-GGUF/resolve/main/mixtral-8x7b-v0.1.Q2_K.gguf", # 15GB
-          # "https://huggingface.co/TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF/resolve/main/mixtral-8x7b-instruct-v0.1.Q3_K_M.gguf", # 20 GB
+          "<dummy>", # replace this or use kustomize
         ]
       volumeMounts:
         - mountPath: "/mnt/models/"
