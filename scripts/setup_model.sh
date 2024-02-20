@@ -1,13 +1,22 @@
 #!/bin/bash
 # Set ups a PV with a model and waits for it to be ready
+#
+# Usage:
+#   bash scripts/setup_model.sh
+# or
+#   bash scripts/setup_model manifests/models/mixtral-8x7b-instruct
+
+if [[ -n $1 ]]; then
+	kustomize_path="$1"
+else
+	kustomize_path="manifests/models/mistral-7b-q2k-extra-small"
+fi
 
 set -eux -o pipefail
 
 pod="pod/setup-model"
 # Create a PVC and schedule a pod to download the model
-
-kubectl kustomize manifests/models/mistral-7b-q2k-extra-small | kubectl apply -f -
-# kubectl kustomize manifests/models/mixtral-8x7b-instruct/patches.yaml | kubectl apply -f -
+kubectl kustomize "${kustomize_path}" | kubectl apply -f -
 
 # Wait for the model to be downloaded:
 max_retries=20
