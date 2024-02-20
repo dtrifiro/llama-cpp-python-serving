@@ -4,7 +4,9 @@ Serving Large Language Models model using [kserve](https://kserve.github.io/webs
 
 See llama.cpp's [docs](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file#description) for a list of supported models
 
-[![Docker Repository on Quay](https://quay.io/repository/dtrifiro/llama-cpp-python-serving/status "Docker Repository on Quay")](https://quay.io/repository/dtrifiro/llama-cpp-python-serving)
+[![Build and Push](https://github.com/dtrifiro/llama-cpp-python-serving/actions/workflows/build.yml/badge.svg)](https://github.com/dtrifiro/llama-cpp-python-serving/actions/workflows/build.yml)
+
+[Pull image from quay.io](https://quay.io/repository/dtrifiro/llama-cpp-python-serving)
 
 ## Requirements
 
