@@ -1,6 +1,6 @@
 # llama-cpp-python serving
 
-Serving Large Language Models model using [kserve](https://kserve.github.io/website/latest/) and [llama-cpp-python](https://github.com/abetlet/llama-cpp-python).
+Serving Large Language Models model using [kserve](https://kserve.github.io/website/latest/) and [llama-cpp-python](https://github.com/abetlen/llama-cpp-python).
 
 See llama.cpp's [docs](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file#description) for a list of supported models
 
