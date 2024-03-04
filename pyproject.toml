@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-llama-cpp-python = {extras = ["server"], version = "^0.2.50"}
+llama-cpp-python = {extras = ["server"], version = "^0.2.55"}
 uvicorn = "^0.27.1"
 
 
