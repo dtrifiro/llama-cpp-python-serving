@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 llama-cpp-python = {extras = ["server"], version = "^0.2.60"}
-uvicorn = "^0.28.0"
+uvicorn = "^0.29.0"
 
 
 [build-system]
