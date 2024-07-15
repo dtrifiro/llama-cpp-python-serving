@@ -39,7 +39,7 @@ WORKDIR /llama-cpp-python
 COPY pyproject.toml .
 COPY poetry.lock .
 
-ENV CMAKE_ARGS="-DLLAMA_CUBLAS=on"
+ENV CMAKE_ARGS="-DGGML_CUBLAS=on"
 RUN pip3.11 install poetry && \
     scl enable gcc-toolset-12 -- poetry install
 
